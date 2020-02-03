@@ -5,13 +5,21 @@ import List from './List'
 
 class App extends React.Component {
   state ={
-    books: {}
+    books: []
   }
 
-  fetchBooks = () => {
-    fetch('https://www.googleapis.com/books/v1/volumes?q=henry')
+  // handleFormValue = () => {
+  //   console.log()
+  // }
+
+  fetchBooks = (e) => {
+    e.preventDefault();
+    console.log(e.target.bookInfo.value)
+    console.log(this.state)
+
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${e.target.bookInfo.value}`)
       .then(response => response.json())
-      .then(response => this.setState({response}));
+      .then(response => this.setState({books: response.items}));
   }
 
 
