@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Header from './Header'
+import Search from './Search'
+import List from './List'
 
-function App() {
+class App extends React.Component {
+  state ={
+    books: {}
+  }
+
+  fetchBooks = () => {
+    fetch('https://www.googleapis.com/books/v1/volumes?q=henry')
+      .then(response => response.json())
+      .then(response => this.setState({response}));
+  }
+
+
+      // <p> books.volumeInfo.descriprion </p>
+
+  render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className='App'>
+      <Header />
+      <Search search={this.fetchBooks} />
+      <List />
+    </main>
   );
+  }
 }
 
 export default App;
