@@ -14,10 +14,8 @@ class App extends React.Component {
 
   fetchBooks = (e) => {
     e.preventDefault();
-    console.log(e.target.bookInfo.value)
-    console.log(this.state)
 
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${e.target.bookInfo.value}`)
+    fetch(`https://www.googleapis.com/books/v1/volumes?q=${e.target.bookInfo.value}${e.target.bookType.value}${e.target.printType.value}`)
       .then(response => response.json())
       .then(response => this.setState({books: response.items}));
   }
@@ -26,11 +24,12 @@ class App extends React.Component {
       // <p> books.volumeInfo.descriprion </p>
 
   render() {
+    console.log(this.state)
   return (
     <main className='App'>
       <Header />
       <Search search={this.fetchBooks} />
-      <List />
+      <List bookItems={this.state.books}/>
     </main>
   );
   }
